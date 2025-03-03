@@ -40,10 +40,10 @@ chmod +x /path/to/your-app/run-browser.sh
 <br/>
 
 **Configure the Debugger**
-- Open the Debug view (`Cmd + Shift + D`).
-- Click the gear icon and select `Chrome`.
-- Replace the default with a config to attach to Brave on `port 9222` —see `.vscode/launch.json` in this repo.
-- Save it as `.vscode/launch.json`.
+1. Open the Debug view (`Cmd + Shift + D`).
+2. Click the gear icon and select `Chrome`.
+3. Replace the default with a config to attach to Brave on `port 9222` —see `.vscode/launch.json` in this repo.
+4. Save it as `.vscode/launch.json`.
 
 <br/>
 
