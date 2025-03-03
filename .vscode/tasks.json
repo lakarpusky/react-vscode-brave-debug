@@ -1,0 +1,47 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "run-browser",
+      "type": "shell",
+      "command": "${workspaceFolder}/run-browser.sh",
+      "group": "none",
+      "presentation": {
+        "reveal": "silent",
+        "panel": "new",
+        "close": true
+      }
+    },
+    {
+      "label": "yarn:dev",
+      "type": "shell",
+      "command": "if lsof -i :8000 > /dev/null; then echo 'Server already running on port :8000'; else yarn run dev; fi",
+      "isBackground": true,
+      "problemMatcher": [
+        {
+          "pattern": [
+            {
+              "regexp": "^.*$",
+              "file": 1,
+              "location": 2,
+              "message": 3
+            }
+          ],
+          "background": {
+            "activeOnStart": true,
+            "beginsPattern": "^.*(Starting development server|Server already running).*$",
+            "endsPattern": "^.*(Compiled successfully|Server already running).*$|^.*Failed to compile.*$"
+          }
+        }
+      ],
+      "group": "build"
+    },
+    {
+      "label": "launch-and-build",
+      "dependsOn": ["run-browser", "yarn:dev"],
+      "dependsOrder": "sequence"
+    }
+  ]
+}
