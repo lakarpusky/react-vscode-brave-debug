@@ -1,0 +1,16 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "chrome",
+      "request": "attach",
+      "name": "Run Brave + Yarn",
+      "url": "http://localhost:8000",
+      "webRoot": "${workspaceFolder}",
+      "port": 9222,
+      "preLaunchTask": "launch-and-build",
+      "timeout": 15000,
+      "trace": true
+    }
+  ]
+}
