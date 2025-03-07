@@ -6,11 +6,32 @@
       "request": "attach",
       "name": "Run Brave + Yarn",
       "url": "http://localhost:8000",
-      "webRoot": "${workspaceFolder}",
+      // You have to update the server port to match your needs
+      // // If debugging fails, ensure the dev server is running before attaching
+
+      "webRoot": "${workspaceFolder}/src",
+      // Ensures that source maps correctly point to the React project files
+      // If breakpoints don't work, verify that `${workspaceFolder}/src` is correct
+
       "port": 9222,
+      // Brave should be launched with remote debugging on this port
+      // If it fails, check if Brave is running with `--remote-debugging-port=9222`
+
       "preLaunchTask": "launch-and-build",
-      "timeout": 15000,
-      "trace": true
+      // Runs `run-browser` and `yarn:dev` before attaching the debugger
+      // If debugging doesn't start, verify that both tasks complete
+
+      "timeout": 10000,
+      // Allows 10 seconds for the dev server to start
+      // If debugging starts too early, increase this value
+
+      "trace": true,
+      // Enables detailed logs to diagnose debugging issues
+      // Check the Debug Console is VSCode if the debugger fails to attach
+
+      "sourceMaps": true
+      // Enables source maps to match minified code with original React source files
+      // If debugging fails to hit breakpoints, check Webpack's `devtool` setting
     }
   ]
 }
