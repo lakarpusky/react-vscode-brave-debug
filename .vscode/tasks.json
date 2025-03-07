@@ -6,19 +6,23 @@
     {
       "label": "run-browser",
       "type": "shell",
-      "command": "${workspaceFolder}/run-browser.sh",
+      "command": "chmod +x ${workspaceFolder}/run-browser.sh && ${workspaceFolder}/run-browser.sh",
+      // If Brave doesn't launch, check if `run-browser.sh` is executable
+      "isBackground": true, // Runs in the background to avooid blocking other tasks
       "group": "none",
       "presentation": {
-        "reveal": "silent",
-        "panel": "new",
-        "close": true
+        "reveal": "silent", // Keeps the terminal output hidden unless an error occurs
+        "panel": "shared", // Reuses the same terminal window
+        "close": true // Closes the panel when the task completes
       }
     },
     {
       "label": "yarn:dev",
       "type": "shell",
       "command": "if lsof -i :8000 > /dev/null; then echo 'Server already running on port :8000'; else yarn run dev; fi",
-      "isBackground": true,
+      // Prevents launching a new server if one is already running
+      // If server is not detected, check if `lsof` is correctly installed
+      "isBackground": true, // Keeps the server running in the background, so debugging can attach
       "problemMatcher": [
         {
           "pattern": [
@@ -30,18 +34,29 @@
             }
           ],
           "background": {
-            "activeOnStart": true,
-            "beginsPattern": "^.*(Starting development server|Server already running).*$",
+            "activeOnStart": true, // Keeps tracking output to determine when the server is ready
+            "beginsPattern": "^.*(Starting development server|Server already running).*$", // Trigger when the server starts
             "endsPattern": "^.*(Compiled successfully|Server already running).*$|^.*Failed to compile.*$"
+            // Recognizes when the server is fully ready or when an error occurs
           }
         }
       ],
-      "group": "build"
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always", // Ensure server output is visible o track status
+        "focus": false,
+        "panel": "shared", // Reuses terminal to prevent clutter
+        "showReuseMessage": true,
+        "clear": false // Prevents clearing previous logs, useful for debugging
+      }
     },
     {
       "label": "launch-and-build",
       "dependsOn": ["run-browser", "yarn:dev"],
       "dependsOrder": "sequence"
+      // Ensures `run-browser` starts before `yarn:dev` sequentially
+      // If dependencies fail, check the logs of individual tasks
     }
   ]
 }
